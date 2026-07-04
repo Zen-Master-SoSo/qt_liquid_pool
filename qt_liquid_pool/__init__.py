@@ -27,7 +27,7 @@ from liquiphy import LiquidSFZ
 from qt_extras import SigBlock
 from conn_jack import JackConnectionManager, JackConnectError
 
-__version__ = "1.0.1"
+__version__ = "1.1.0"
 
 
 SYNTH_NAME = 'liquidsfz'
