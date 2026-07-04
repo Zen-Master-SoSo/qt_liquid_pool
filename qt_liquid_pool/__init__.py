@@ -40,8 +40,6 @@ class LiquidPool(QObject):
 	Handles audio, including hosting an instance of liquidsfz, and playing samples.
 	"""
 
-	__instance = None
-
 	_sig_ports_complete = pyqtSignal()	# \
 	_sig_sources_changed = pyqtSignal()	#  \
 	_sig_sinks_changed = pyqtSignal()	#  | Used to decouple JackConnectionManager callbacks
@@ -50,11 +48,6 @@ class LiquidPool(QObject):
 	sig_jack_ready = pyqtSignal(bool, int)
 	sig_clients_changed = pyqtSignal()
 	sig_connections_changed = pyqtSignal()
-
-	def __new__(cls):
-		if cls.__instance is None:
-			cls.__instance = super().__new__(cls)
-		return cls.__instance
 
 	def __init__(self):
 		super().__init__()
@@ -442,12 +435,6 @@ class Synth(LiquidSFZ, QObject):
 		Returns True if all ports are defined.
 		"""
 		return self.input_port and len(self.output_ports) == 2
-
-	def delete(self):
-		"""
-		May be called from outside.
-		"""
-		LiquidPool().delete_synth(self)
 
 	def quit(self):
 		"""
