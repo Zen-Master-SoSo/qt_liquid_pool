@@ -17,6 +17,11 @@ above-mentioned LiquidSFZ instances.
 in your project for allowing a user to select input and output devices to
 connect to the LiquidSFZ instance(s).
 
+Here's a screenshot of the test window, showing two combo boxes for source/sink
+selection, and a table displaying instantiated synth ports and their connections:
+
+<img width="635" height="379" alt="test-window" src="https://github.com/user-attachments/assets/0615fb7e-203d-44a3-9c36-c795dd5f3e05" />
+
 I found myself using the same blocks of code in several projects, and decided
 to break these out into a new project which could be generally reused.
 
