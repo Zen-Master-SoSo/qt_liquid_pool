@@ -311,7 +311,7 @@ class LiquidPool(QObject):
 				logging.warning('Jack registered an unknown liquidsfz instance: "%s"',
 					client_name)
 
-	def _jack_port_registration(self, port, action):
+	def _jack_port_registration(self, port, _):
 		"""
 		JackConnectionManager callback.
 		NOTE: This method runs in a different thread.
@@ -330,7 +330,7 @@ class LiquidPool(QObject):
 		elif port.is_output and port.is_midi:
 			self._sig_sources_changed.emit()
 
-	def _jack_port_connect(self, port_a, port_b, action):
+	def _jack_port_connect(self, *_):
 		"""
 		JackConnectionManager callback.
 		NOTE: This method runs in a different thread.
@@ -449,11 +449,14 @@ class Synth(LiquidSFZ, QObject):
 class _ManagedComboBox(QComboBox):
 
 	def __init__(self, pool, parent):
-		super().__init__(parent);
+		super().__init__(parent)
 		self.pool = pool
 
 
 class MidiInCombo(_ManagedComboBox):
+	"""
+	Combo box for selecting MIDI input port
+	"""
 
 	@pyqtSlot()
 	def slot_sources_changed(self):
@@ -469,6 +472,9 @@ class MidiInCombo(_ManagedComboBox):
 
 
 class AudioOutCombo(_ManagedComboBox):
+	"""
+	Combo box for selecting audio output client.
+	"""
 
 	@pyqtSlot()
 	def slot_sinks_changed(self):
