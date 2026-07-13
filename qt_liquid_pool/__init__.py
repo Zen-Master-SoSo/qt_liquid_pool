@@ -18,7 +18,7 @@
 #  MA 02110-1301, USA.
 #
 """
-Provides MainWindow of the kitstarter application.
+Provides the LiquidPool class, for managing instances of liquidsfz.
 """
 import logging
 from PyQt5.QtCore import Qt, QObject, pyqtSignal, pyqtSlot, QTimer
@@ -37,7 +37,8 @@ REGISTRATION_TIMEOUT_INTERVAL = 500
 
 class LiquidPool(QObject):
 	"""
-	Handles audio, including hosting an instance of liquidsfz, and playing samples.
+	Manages the creation and connection of one or more instances of liquidsfz, each
+	running in a separate process.
 	"""
 
 	_sig_ports_complete = pyqtSignal()	# \
@@ -197,6 +198,7 @@ class LiquidPool(QObject):
 	def disconnect_midi_source(self, port):
 		"""
 		Disconnects the currently connected midi source port from all synths.
+		"port" is a single conn_jack.JackPort to disconnect from.
 
 		Override this method in order to manage other clients, such as an instance of
 		JackAudioPlayer. Be sure to call:
@@ -209,6 +211,7 @@ class LiquidPool(QObject):
 	def connect_midi_source(self, port):
 		"""
 		Connects all synths to the given midi source port.
+		"port" is a single conn_jack.JackPort to connect to.
 
 		Override this method in order to manage other clients, such as an instance of
 		JackAudioPlayer. Be sure to call:
@@ -221,6 +224,7 @@ class LiquidPool(QObject):
 	def disconnect_audio_sinks(self, ports):
 		"""
 		Disconnects the currently connected audio sink ports from all synths.
+		"ports" is a list of currently connected audio sink ports, (usually two).
 
 		Override this method in order to manage other clients, such as an instance of
 		JackAudioPlayer. Be sure to call:
@@ -234,6 +238,7 @@ class LiquidPool(QObject):
 	def connect_audio_sinks(self, ports):
 		"""
 		Connects all synths to the given audio sink ports.
+		"ports" is a list of audio sink ports to connect to, (usually two).
 
 		Override this method in order to manage other clients, such as an instance of
 		JackAudioPlayer. Be sure to call:
